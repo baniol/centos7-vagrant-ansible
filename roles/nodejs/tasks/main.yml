@@ -1,0 +1,16 @@
+---
+# http://www.thisprogrammingthing.com/2015/installing-a-current-version-of-node-using-ansible/
+- name: Download Source
+  get_url: url=https://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}.tar.gz
+           dest=/usr/local/src/nodejs-{{nodejs_version}}.tar.gz
+- name: Extract Source
+  shell: tar xf /usr/local/src/nodejs-{{ nodejs_version }}.tar.gz -C /usr/local/src
+         creates=/usr/local/src/node-v{{ nodejs_version }}
+- name: Install
+  command: creates=/usr/local/bin/node {{item}}
+  args:
+    chdir: /usr/local/src/node-v{{nodejs_version}}
+  with_items:
+    - ./configure
+    - make
+    - make install

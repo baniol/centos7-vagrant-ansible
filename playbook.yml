@@ -1,0 +1,17 @@
+- hosts: all
+  sudo: true
+  tasks:
+    - name: update yum packages
+      yum: name=* state=latest
+    - name: Install Dependencies
+      yum: pkg={{ item }}
+      with_items:
+        - gcc
+        - make
+    - name: install Git
+      yum: name=git state=present
+    - name: install Ruby
+      yum: name=ruby state=present
+  roles:
+    - {role: nodejs, nodejs_version: 5.3.0}
+    - role: vim
