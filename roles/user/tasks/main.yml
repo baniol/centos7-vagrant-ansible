@@ -1,0 +1,16 @@
+---
+#- name: create group visuser
+  #group: name={{username}} state=present
+- name: create group {{username}}
+  group: name={{username}} state=present
+- name: create {{username}} account
+  user: name={{username}} comment="{{username}} password="developer" account" group={{username}} groups=wheel
+  #user: name=visuser comment="{{username}} Account" uid=501 group={{username}}
+#- name: allow password login via ssh
+  #lineinfile: dest=/etc/ssh/sshd_config regexp='^PasswordAuthentication' line='PasswordAuthentication yes' owner=root group=root mode=0644
+#- name: restart sshd
+  #service: name=sshd state=restarted
+- name: add ssh keys
+  authorized_key: user={{username}} key="{{ lookup('file', '../files/authorized_keys.pub')}}"
+- name: allow passwordless sudo for {{username}}
+  lineinfile: "dest=/etc/sudoers regexp='^{{username}}' line='{{username}} ALL=(ALL)       NOPASSWD: ALL' owner=root group=root mode=0644"

@@ -1,16 +1,19 @@
----
-# http://www.thisprogrammingthing.com/2015/installing-a-current-version-of-node-using-ansible/
-- name: Download Source
-  get_url: url=https://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}.tar.gz
-           dest=/usr/local/src/nodejs-{{nodejs_version}}.tar.gz
-- name: Extract Source
-  shell: tar xf /usr/local/src/nodejs-{{ nodejs_version }}.tar.gz -C /usr/local/src
-         creates=/usr/local/src/node-v{{ nodejs_version }}
-- name: Install
-  command: creates=/usr/local/bin/node {{item}}
-  args:
-    chdir: /usr/local/src/node-v{{nodejs_version}}
+- name: Assure Node Dir is present
+  file: path=/home/{{username}}/node state=directory owner={{username}} group={{username}} mode=0755
+- name: Download Nodejs Source
+  get_url: url=https://nodejs.org/dist/v{{nodejsversion}}/node-v{{nodejsversion}}-linux-x64.tar.gz dest=/home/{{username}}/node/nodejs-{{nodejsversion}}.tar.gz
+- name: UnTar File
+  unarchive: src=/home/{{username}}/node/nodejs-{{nodejsversion}}.tar.gz dest=/home/{{username}}/node owner={{username}} group={{username}} copy=no
+- name: wait for 2s to reload
+  pause: seconds=4
+- name: add symlink for node
+  file: src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/bin/node dest=/usr/local/bin/node owner=root group=root state=link
+- name: add symlink for npm
+  file: src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/bin/npm dest=/usr/local/bin/npm owner=root group=root state=link
+- name: install packages for npm install
+  yum: name={{ item }} state=latest
   with_items:
-    - ./configure
     - make
-    - make install
+    - glibc-devel
+    - gcc
+    - gcc-c++
