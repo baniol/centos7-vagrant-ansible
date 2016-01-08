@@ -3,3 +3,4 @@
 .idea
 provision/vars/vars.yml
 .DS_Store
+projects

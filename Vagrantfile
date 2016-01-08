@@ -8,9 +8,9 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
     end
 
-    config.vm.synced_folder "./Projects/", "/home/vagrant/Projects"
+    config.vm.synced_folder "./projects/", "/home/vagrant/projects"
     #config.vm.synced_folder "./provision/", "/home/vagrant/provision"
-    #config.vm.synced_folder "./Projects", "/home/vagrant/Projects", :nfs => true, :mount_options => ['nolock,vers=3,udp,noatime,fsc,actimeo=1']
+    #config.vm.synced_folder "./projects", "/home/vagrant/projects", :nfs => true
 
     config.ssh.username = 'vagrant'
     config.ssh.password = 'vagrant'
