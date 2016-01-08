@@ -14,5 +14,5 @@
     - role: nodejs
     # - role: nginx
     - role: tools
-    # - role: docker
+    - role: docker
 #   - role: mysql
