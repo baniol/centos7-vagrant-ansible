@@ -1,0 +1,39 @@
+- name: update yum packages
+  yum: name=* state=latest
+
+- name: install Git
+  yum: name=git state=present
+- name: install necessary packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - make
+    - glibc-devel
+    - gcc
+    - gcc-c++
+    - net-tools
+
+- name: Set git user
+  shell: "git config --global user.name \"{{git_user}}\""
+  sudo: false
+
+- name: Set git email
+  shell: "git config --global user.email {{git_email}}"
+  sudo: false
+
+- name: Disable firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+
+- name: Disable Selinux
+  replace:
+    dest=/etc/sysconfig/selinux
+    regexp='^SELINUX=.*'
+    replace='SELINUX=disabled'
+
+- name: Disable Selinux
+  command: setenforce 0
+
+#- name: install Ruby
+  #yum: name=ruby state=present

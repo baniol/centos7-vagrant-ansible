@@ -1,0 +1,30 @@
+---
+- name: Assure Node Dir is present
+  file: path=/home/{{username}}/node state=directory owner={{username}} group={{username}} mode=0755
+
+- name: Download Nodejs Source
+  get_url:
+    url=https://nodejs.org/dist/v{{nodejsversion}}/node-v{{nodejsversion}}-linux-x64.tar.gz
+    dest=/home/{{username}}/node/nodejs-{{nodejsversion}}.tar.gz
+
+- name: UnTar File
+  unarchive:
+    src=/home/{{username}}/node/nodejs-{{nodejsversion}}.tar.gz
+    dest=/home/{{username}}/node owner={{username}} group={{username}}
+    copy=no
+
+- name: add symlink for node
+  file:
+    src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/bin/node
+    dest=/usr/bin/node
+    owner=root
+    group=root
+    state=link
+
+- name: add symlink for npm
+  file:
+    src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/bin/npm
+    dest=/usr/bin/npm
+    owner=root
+    group=root
+    state=link

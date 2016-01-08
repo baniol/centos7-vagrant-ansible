@@ -1,0 +1,29 @@
+---
+- name: Install Bower and Grunt
+  npm: name={{ item }} state=present global=yes
+  with_items:
+  - bower
+  - grunt-cli
+
+- name: add symlink for bower
+  file:
+    src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/lib/node_modules/bower/bin/bower
+    dest=/usr/bin/bower
+    owner=root
+    group=root
+    state=link
+
+- name: add symlink for grunt-cli
+  file:
+    src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/lib/node_modules/grunt-cli/bin/grunt
+    dest=/usr/bin/grunt
+    owner=root
+    group=root
+    state=link
+
+- name: Assure Projects dir is present
+  file:
+    path={{project_dir}}
+    state=directory
+    owner={{username}}
+    group={{username}}

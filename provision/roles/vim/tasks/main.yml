@@ -3,6 +3,6 @@
   yum: name=vim state=present
 - name: Download Vim Custom Settings & Plugins
   get_url: url=https://www.dropbox.com/s/c7a13h7yjhjk547/vim.tar.gz?dl=1
-           dest=/root/vim.tar.gz
-- name: Extract Source
-  shell: cd ~/; tar xf vim.tar.gz
+           dest=/home/{{username}}/vim.tar.gz
+- name: Extract Source Plugins and Settings
+  unarchive: src=/home/{{username}}/vim.tar.gz dest=/home/{{username}} copy=no

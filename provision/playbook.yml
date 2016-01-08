@@ -1,0 +1,18 @@
+- hosts: all
+  sudo: true
+  gather_facts: no
+
+  vars_files:
+    - vars/vars.yml
+
+  handlers:
+    - include: handlers.yml
+
+  roles:
+    - role: common
+    - role: vim
+    - role: nodejs
+    # - role: nginx
+    - role: tools
+    # - role: docker
+#   - role: mysql

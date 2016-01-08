@@ -1,0 +1,6 @@
+---
+username: "vagrant"
+project_dir: "/home/vagrant/Projects"
+nodejsversion: 5.3.0
+git_user: ""
+git_email: ""
