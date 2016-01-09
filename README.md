@@ -12,6 +12,8 @@ Once the repo cloned, copy the `provision/vars/example.vars.yml` file into `prov
 
 Create a `projects` directory in the repo root folder.
 
+Run `vagrant vbguest`.
+
 Run `vagrant up`.
 
 ## Running on Windows
@@ -31,3 +33,7 @@ Run `vagrant up`.
 ## Shared folder
 
 You can place your code in the shared `project` folder.
+
+## Using MongoDB docker container
+
+To run the container: `sudo docker run -d -p 27017:27017 --name myMongo -v /data/db:/home/vagrant/data/db mongo`

@@ -1,0 +1,14 @@
+---
+- name: Create the Github SSH public key file
+  copy: src="{{local_user_path}}.ssh/id_rsa.pub"
+        dest="/home/{{username}}/.ssh/id_rsa_github.pub"
+        mode=0644
+        owner={{username}}
+        group={{username}}
+
+- name: Create the Github SSH private key file
+  copy: src="{{local_user_path}}.ssh/id_rsa"
+        dest="/home/{{username}}/.ssh/id_rsa_github"
+        mode=0600
+        owner={{username}}
+        group={{username}}

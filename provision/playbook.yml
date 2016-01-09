@@ -9,10 +9,12 @@
     - include: handlers.yml
 
   roles:
-    - role: common
-    - role: vim
+    # - role: common
+    # - role: git
+    # - role: vim
     - role: nodejs
     # - role: nginx
-    - role: tools
-    - role: docker
+    # - role: tools
+    # - role: docker
+    # - role: docker-images
 #   - role: mysql

@@ -13,18 +13,21 @@
     dest=/home/{{username}}/node owner={{username}} group={{username}}
     copy=no
 
-- name: add symlink for node
-  file:
-    src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/bin/node
-    dest=/usr/bin/node
-    owner=root
-    group=root
-    state=link
+# - name: add symlink for node
+#   file:
+#     src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/bin/node
+#     dest=/usr/bin/node
+#     owner=root
+#     group=root
+#     state=link
 
-- name: add symlink for npm
-  file:
-    src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/bin/npm
-    dest=/usr/bin/npm
-    owner=root
-    group=root
-    state=link
+# - name: add symlink for npm
+#   file:
+#     src=/home/{{username}}/node/node-v{{nodejsversion}}-linux-x64/bin/npm
+#     dest=/usr/bin/npm
+#     owner=root
+#     group=root
+#     state=link
+
+- name: Add node bin to $PATH
+  lineinfile: dest=/home/{{username}}/.bash_profile line="PATH=$PATH:$HOME/node/node-v{{nodejsversion}}-linux-x64/bin" insertbefore="export PATH"
